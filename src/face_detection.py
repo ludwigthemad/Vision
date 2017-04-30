@@ -107,7 +107,7 @@ def recognize_face(face_img, session, classifier):
 	rep = session.run(embeddings, feed_dict=feed_dict)[0]
 	probabilities = clf.predict_proba(rep.reshape(1,-1))
 	out = np.argmax(probabilities[0])
-	names = np.load('models/own_embeddings/own_names.npy')
+	names = np.load('models/lfw_embeddings/new_names.npy')
 	face_name = names[out]
 	
 	#------- Communication workaround -----------
@@ -119,7 +119,9 @@ def recognize_face(face_img, session, classifier):
 	os.remove(COMM_PATH + 'running')
 	#--------------------------------------------
 	
-	print('classification successful!')
+	print('classification successful:')
+	print(face_name + ' , probability: ' + str(probabilities[0][out]))
+
 	return face_name
 
 # function for importing facenet
@@ -197,7 +199,7 @@ if __name__ == '__main__':
 	print('Loading Facenet...')
 	tree_model = "models/Tree/own.mod"
 	svm_model = "models/SVM/svm_lfw.mod"
-	clf = pickle.load( open( tree_model, "rb" ) )
+	clf = pickle.load( open( svm_model, "rb" ) )
 	model_dir = 'models/facenet'
 	meta_file, ckpt_file = get_model_filenames(os.path.expanduser(model_dir))
 	session = load_model(model_dir, meta_file, ckpt_file)
