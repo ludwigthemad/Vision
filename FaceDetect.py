@@ -5,7 +5,7 @@ import dlib
 import cv2
 import numpy as np
 
-
+    
 #def StartDetection():
 print("[INFO] loading facial landmark predictor...")
 detector = dlib.get_frontal_face_detector()
